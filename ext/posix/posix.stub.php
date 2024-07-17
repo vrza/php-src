@@ -454,3 +454,6 @@ function posix_pathconf(string $path, int $name): int|false {}
 /** @param resource|int $file_descriptor */
 function posix_fpathconf($file_descriptor, int $name): int|false {}
 #endif
+
+/** @param array $streams */
+function posix_pipe(&$streams = []): bool {}
