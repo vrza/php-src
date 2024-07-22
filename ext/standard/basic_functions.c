@@ -2603,7 +2603,7 @@ PHP_FUNCTION(sys_getloadavg)
 
 
 #ifdef PHP_WIN32
-SECURITY_ATTRIBUTES php_proc_open_security = {
+SECURITY_ATTRIBUTES php_pipe_security = {
         .nLength = sizeof(SECURITY_ATTRIBUTES),
         .lpSecurityDescriptor = NULL,
         .bInheritHandle = TRUE
