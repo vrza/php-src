@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 504f4172ac1d64535719234888400063eb37361b */
+ * Stub hash: b0ede358f90c0f11f9d4f7d75a827988c17bb8ae */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_set_time_limit, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, seconds, IS_LONG, 0)
@@ -602,6 +602,10 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_sys_getloadavg, 0, 0, MAY_BE_ARRAY|MAY_BE_FALSE)
 ZEND_END_ARG_INFO()
 #endif
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_pipe, 0, 0, _IS_BOOL, 0)
+	ZEND_ARG_INFO_WITH_DEFAULT_VALUE(1, streams, "[]")
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_get_browser, 0, 0, MAY_BE_OBJECT|MAY_BE_ARRAY|MAY_BE_FALSE)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, user_agent, IS_STRING, 1, "null")
@@ -2495,6 +2499,7 @@ ZEND_FUNCTION(config_get_hash);
 #if defined(HAVE_GETLOADAVG)
 ZEND_FUNCTION(sys_getloadavg);
 #endif
+ZEND_FUNCTION(pipe);
 ZEND_FUNCTION(get_browser);
 ZEND_FUNCTION(crc32);
 ZEND_FUNCTION(crypt);
@@ -3127,6 +3132,7 @@ static const zend_function_entry ext_functions[] = {
 #if defined(HAVE_GETLOADAVG)
 	ZEND_FE(sys_getloadavg, arginfo_sys_getloadavg)
 #endif
+	ZEND_FE(pipe, arginfo_pipe)
 	ZEND_FE(get_browser, arginfo_get_browser)
 	ZEND_RAW_FENTRY("crc32", zif_crc32, arginfo_crc32, ZEND_ACC_COMPILE_TIME_EVAL, NULL, NULL)
 	ZEND_FE(crypt, arginfo_crypt)

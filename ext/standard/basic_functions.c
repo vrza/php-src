@@ -2600,3 +2600,52 @@ PHP_FUNCTION(sys_getloadavg)
 }
 /* }}} */
 #endif
+
+
+#ifdef PHP_WIN32
+SECURITY_ATTRIBUTES php_proc_open_security = {
+        .nLength = sizeof(SECURITY_ATTRIBUTES),
+        .lpSecurityDescriptor = NULL,
+        .bInheritHandle = TRUE
+};
+# define pipe(pair)             (CreatePipe(&pair[0], &pair[1], &php_proc_open_security, 0) ? 0 : -1)
+#endif
+
+PHP_FUNCTION(pipe)
+{
+	zval *streams;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(streams)
+	ZEND_PARSE_PARAMETERS_END();
+
+	int fildes[2];
+	int status = pipe(fildes);
+	if (status == -1) {
+		PG(last_error_type) = errno;
+		RETURN_FALSE;
+	}
+
+	char *read_mode = "rb";
+	char *write_mode = "ab";
+
+	FILE *read_file = fdopen(fildes[0], read_mode);
+	FILE *write_file = fdopen(fildes[1], write_mode);
+
+	php_stream *read_stream = php_stream_fopen_from_pipe(read_file, read_mode);
+	php_stream *write_stream = php_stream_fopen_from_pipe(write_file, write_mode);
+
+	zval read_zval;
+	php_stream_to_zval(read_stream, &read_zval);
+	zval write_zval;
+	php_stream_to_zval(write_stream, &write_zval);
+
+	streams = zend_try_array_init(streams);
+	if (!streams) {
+		RETURN_THROWS();
+	}
+	add_next_index_zval(streams, &read_zval);
+	add_next_index_zval(streams, &write_zval);
+
+	RETURN_TRUE;
+}

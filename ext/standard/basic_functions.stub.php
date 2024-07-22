@@ -2093,6 +2093,9 @@ function config_get_hash(): array {}
 function sys_getloadavg(): array|false {}
 #endif
 
+/** @param array $streams */
+function pipe(&$streams = []): bool {}
+
 /* browscap.c */
 
 /**
