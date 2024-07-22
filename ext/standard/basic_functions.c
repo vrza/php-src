@@ -2609,6 +2609,9 @@ SECURITY_ATTRIBUTES php_pipe_security = {
         .bInheritHandle = TRUE
 };
 # define pipe(pair) (CreatePipe(&pair[0], &pair[1], &php_pipe_security, 0) ? 0 : -1)
+typedef HANDLE php_file_descriptor_t;
+#else
+typedef int php_file_descriptor_t;
 #endif
 
 PHP_FUNCTION(pipe)
@@ -2619,7 +2622,7 @@ PHP_FUNCTION(pipe)
 		Z_PARAM_ZVAL(streams)
 	ZEND_PARSE_PARAMETERS_END();
 
-	int fildes[2];
+	php_file_descriptor_t fildes[2];
 	int status = pipe(fildes);
 	if (status == -1) {
 		PG(last_error_type) = errno;
