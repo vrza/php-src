@@ -2608,7 +2608,7 @@ SECURITY_ATTRIBUTES php_pipe_security = {
         .lpSecurityDescriptor = NULL,
         .bInheritHandle = TRUE
 };
-# define pipe(pair)             (CreatePipe(&pair[0], &pair[1], &php_proc_open_security, 0) ? 0 : -1)
+# define pipe(pair) (CreatePipe(&pair[0], &pair[1], &php_pipe_security, 0) ? 0 : -1)
 #endif
 
 PHP_FUNCTION(pipe)
