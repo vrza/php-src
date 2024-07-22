@@ -1354,8 +1354,8 @@ PHP_FUNCTION(posix_pipe)
 		RETURN_FALSE;
 	}
 
-	char *read_mode = "rb";
-	char *write_mode = "ab";
+	char *read_mode = "r";
+	char *write_mode = "w";
 
 	FILE *read_file = fdopen(fildes[0], read_mode);
 	FILE *write_file = fdopen(fildes[1], write_mode);
